@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+# THESE PERMISSIONS ARE REQUIRED
 permissions:
   contents: read
   pages: write
@@ -16,25 +17,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-
       - name: Install dependencies
         run: npm install
-
       - name: Build
         run: npm run build
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './dist' # Ensure this matches your Vite build folder
 
   deploy:
+    # THIS ENVIRONMENT MUST BE CALLED 'github-pages'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
