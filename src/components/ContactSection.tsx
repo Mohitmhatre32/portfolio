@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { profile } from "@/lib/data";
 import { motion } from "framer-motion";
+import { Github, Linkedin, Code2 as LeetCode } from "lucide-react";
 
 const socials = [
-  { label: "GitHub", url: profile.github, icon: "GH" },
-  { label: "LinkedIn", url: profile.linkedin, icon: "LI" },
+  { label: "GitHub", url: profile.github || "#", icon: Github },
+  { label: "LinkedIn", url: profile.linkedin || "#", icon: Linkedin },
+  { label: "LeetCode", url: profile.leetcode || "#", icon: LeetCode },
 ];
 
 const ContactSection = () => {
@@ -17,8 +19,8 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="relative py-32 px-6">
-      <div className="max-w-4xl mx-auto text-center">
+    <section id="contact" className="relative py-20 px-6">
+      <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold mb-6">
           <span className="gradient-text">Let's Build</span>
           <br />
@@ -46,17 +48,21 @@ const ContactSection = () => {
 
         {/* Socials */}
         <div className="flex justify-center gap-4">
-          {socials.map(s => (
-            <a
-              key={s.label}
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="magnetic-btn glass-card w-14 h-14 rounded-xl flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-500 font-mono text-sm font-bold"
-            >
-              {s.icon}
-            </a>
-          ))}
+          {socials.map(s => {
+            const Icon = s.icon;
+            return (
+              <a
+                key={s.label}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="magnetic-btn glass-card w-14 h-14 rounded-xl flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-500"
+                aria-label={s.label}
+              >
+                <Icon className="w-6 h-6" strokeWidth={1.5} />
+              </a>
+            );
+          })}
         </div>
 
         {/* Footer */}

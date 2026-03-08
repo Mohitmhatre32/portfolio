@@ -4,11 +4,29 @@ import * as THREE from "three";
 
 const PARTICLE_COUNT = 800;
 
+// Create a soft glowing circle texture using an HTML canvas
+const createCircleTexture = () => {
+  const canvas = document.createElement("canvas");
+  canvas.width = 64;
+  canvas.height = 64;
+  const context = canvas.getContext("2d");
+  if (context) {
+    const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gradient.addColorStop(0, "rgba(255,255,255,1)");
+    gradient.addColorStop(0.2, "rgba(255,255,255,0.8)");
+    gradient.addColorStop(0.5, "rgba(255,255,255,0.2)");
+    gradient.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 64, 64);
+  }
+  return canvas;
+};
+
 function ParticleField() {
   const meshRef = useRef<THREE.Points>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
-  const { positions, velocities, colors } = useMemo(() => {
+  const { positions, velocities, colors, texture } = useMemo(() => {
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const velocities = new Float32Array(PARTICLE_COUNT * 3);
     const colors = new Float32Array(PARTICLE_COUNT * 3);
@@ -23,14 +41,23 @@ function ParticleField() {
       velocities[i3 + 1] = (Math.random() - 0.5) * 0.005;
       velocities[i3 + 2] = (Math.random() - 0.5) * 0.002;
 
-      // Warm amber to gold color palette
+      // Mix of warm amber and cool twilight blue
       const t = Math.random();
-      colors[i3] = 0.8 + t * 0.2;     // R
-      colors[i3 + 1] = 0.5 + t * 0.3; // G
-      colors[i3 + 2] = 0.1 + t * 0.2; // B
+      if (t > 0.5) {
+        // Gold/Amber
+        colors[i3] = 0.8 + Math.random() * 0.2;     // R
+        colors[i3 + 1] = 0.5 + Math.random() * 0.3; // G
+        colors[i3 + 2] = 0.1 + Math.random() * 0.2; // B
+      } else {
+        // Deep cyan/blue
+        colors[i3] = 0.1 + Math.random() * 0.1;     // R
+        colors[i3 + 1] = 0.4 + Math.random() * 0.4; // G
+        colors[i3 + 2] = 0.8 + Math.random() * 0.2; // B
+      }
     }
 
-    return { positions, velocities, colors };
+    const texture = new THREE.CanvasTexture(createCircleTexture());
+    return { positions, velocities, colors, texture };
   }, []);
 
   useFrame(({ clock }) => {
@@ -73,10 +100,11 @@ function ParticleField() {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.04}
+        size={0.15}
+        map={texture}
         vertexColors
         transparent
-        opacity={0.7}
+        opacity={0.8}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -85,37 +113,11 @@ function ParticleField() {
   );
 }
 
-function FloatingOrbs() {
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame(({ clock }) => {
-    if (!groupRef.current) return;
-    const t = clock.elapsedTime;
-    groupRef.current.children.forEach((child, i) => {
-      child.position.y = Math.sin(t * 0.5 + i * 2) * 0.5;
-      child.position.x = Math.cos(t * 0.3 + i * 1.5) * 0.3 + (i - 1) * 3;
-    });
-  });
-
-  return (
-    <group ref={groupRef}>
-      {[0, 1, 2].map(i => (
-        <mesh key={i} position={[(i - 1) * 3, 0, -2]}>
-          <sphereGeometry args={[0.15 + i * 0.05, 16, 16]} />
-          <meshBasicMaterial
-            color={new THREE.Color().setHSL(0.1 + i * 0.02, 0.8, 0.5 + i * 0.1)}
-            transparent
-            opacity={0.3}
-          />
-        </mesh>
-      ))}
-    </group>
-  );
-}
+// Removed FloatingOrbs component
 
 const HeroScene = () => {
   return (
-    <div className="absolute inset-0">
+    <div className="fixed inset-0 z-0 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 60 }}
         dpr={[1, 1.5]}
@@ -124,7 +126,6 @@ const HeroScene = () => {
       >
         <ambientLight intensity={0.2} />
         <ParticleField />
-        <FloatingOrbs />
       </Canvas>
     </div>
   );

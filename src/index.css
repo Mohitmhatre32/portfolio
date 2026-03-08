@@ -1,19 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
-
 @layer base {
   :root {
-    --background: 30 5% 4%;
-    --foreground: 40 20% 90%;
+    --background: 220 20% 4%;
+    --foreground: 210 20% 90%;
 
-    --card: 30 5% 7%;
-    --card-foreground: 40 20% 90%;
+    --card: 220 15% 7%;
+    --card-foreground: 210 20% 90%;
 
-    --popover: 30 5% 7%;
-    --popover-foreground: 40 20% 90%;
+    --popover: 220 15% 7%;
+    --popover-foreground: 210 20% 90%;
 
     --primary: 38 90% 55%;
     --primary-foreground: 30 5% 4%;
@@ -48,16 +48,16 @@
     /* Custom tokens */
     --glow-primary: 38 90% 55%;
     --glow-warm: 25 80% 50%;
-    --glass-bg: 30 5% 8% / 0.6;
-    --glass-border: 38 40% 30% / 0.2;
-    --gradient-forge: linear-gradient(135deg, hsl(30 5% 4%), hsl(30 8% 10%), hsl(38 20% 12%));
+    --glass-bg: 220 15% 6% / 0.6;
+    --glass-border: 220 15% 20% / 0.4;
+    --gradient-forge: linear-gradient(135deg, hsl(220 20% 4%), hsl(220 20% 8%), hsl(220 15% 12%));
     --gradient-molten: linear-gradient(135deg, hsl(38 90% 55%), hsl(25 80% 50%), hsl(15 70% 45%));
     --gradient-ember: linear-gradient(180deg, hsl(38 90% 55% / 0.15), transparent);
     --shadow-glow: 0 0 40px hsl(38 90% 55% / 0.15);
     --shadow-ember: 0 0 80px hsl(25 80% 50% / 0.1);
 
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'Space Grotesk', sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 }
@@ -69,16 +69,25 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background-color: hsl(var(--background));
+    background-image: radial-gradient(circle at top center, hsl(220 15% 10% / 1) 0%, hsl(var(--background)) 50%);
+    background-attachment: fixed;
     font-family: var(--font-body);
     overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
   }
 
-  code, pre {
+  code,
+  pre {
     font-family: var(--font-mono);
   }
 

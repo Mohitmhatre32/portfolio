@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import HeroScene from "./HeroScene";
 import { profile } from "@/lib/data";
 
 const HeroSection = () => {
@@ -58,9 +57,6 @@ const HeroSection = () => {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* 3D Background */}
-      <HeroScene />
-
       {/* Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none" />
@@ -85,9 +81,8 @@ const HeroSection = () => {
           {nameChars.map((char, i) => (
             <span
               key={i}
-              className={`hero-name-char inline-block ${
-                char === " " ? "mr-4" : ""
-              } glow-text text-foreground`}
+              className={`hero-name-char inline-block ${char === " " ? "mr-4" : ""
+                } text-foreground`}
             >
               {char === " " ? "\u00A0" : char}
             </span>

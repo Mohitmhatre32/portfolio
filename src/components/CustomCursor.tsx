@@ -43,8 +43,9 @@ const CustomCursor = () => {
 
     let animId: number;
     const animate = () => {
-      pos.current.x += (target.current.x - pos.current.x) * 0.15;
-      pos.current.y += (target.current.y - pos.current.y) * 0.15;
+      // Increased lerp factor from 0.15 to 0.4 for faster tracking
+      pos.current.x += (target.current.x - pos.current.x) * 0.4;
+      pos.current.y += (target.current.y - pos.current.y) * 0.4;
 
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate(${pos.current.x - 6}px, ${pos.current.y - 6}px)`;

@@ -13,6 +13,18 @@ const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace(/.*\#/, "");
+    const elem = document.getElementById(targetId);
+    if (elem) {
+      elem.scrollIntoView({
+        behavior: "smooth",
+      });
+      setMobileOpen(false);
+    }
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener("scroll", onScroll);
@@ -25,29 +37,30 @@ const Navigation = () => {
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{ delay: 2, duration: 0.6 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "py-3" : "py-6"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+          ? "py-3 bg-background/70 backdrop-blur-md border-b border-white/10 shadow-sm"
+          : "py-6 bg-transparent"
+          }`}
       >
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-          <a href="#hero" className="text-foreground font-display font-bold text-lg tracking-tight">
-            M<span className="text-primary">.</span>
-          </a>
+          <button
+            onClick={(e) => handleScroll(e as unknown as React.MouseEvent<HTMLAnchorElement, MouseEvent>, "#hero")}
+            className="text-foreground font-display font-bold text-xl tracking-tight flex items-center"
+          >
+            M<span className="text-primary text-2xl leading-none">.</span><span className="text-primary">dev</span>
+          </button>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map(item => (
-              <a
+              <button
                 key={item.label}
-                href={item.href}
-                className="text-sm font-mono text-muted-foreground hover:text-primary transition-colors duration-300"
+                onClick={(e) => handleScroll(e as unknown as React.MouseEvent<HTMLAnchorElement, MouseEvent>, item.href)}
+                className="text-sm font-body font-medium text-foreground/80 hover:text-primary hover:-translate-y-0.5 transition-all duration-300"
               >
                 {item.label}
-              </a>
+              </button>
             ))}
-            <div className="text-xs font-mono text-muted-foreground/30 ml-2 px-2 py-1 border border-border/30 rounded">
-              ⌘K
-            </div>
           </div>
 
           {/* Mobile toggle */}
@@ -75,17 +88,16 @@ const Navigation = () => {
           >
             <div className="flex flex-col items-center gap-8">
               {navItems.map((item, i) => (
-                <motion.a
+                <motion.button
                   key={item.label}
-                  href={item.href}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => handleScroll(e as unknown as React.MouseEvent<HTMLAnchorElement, MouseEvent>, item.href)}
                   className="text-2xl font-display font-bold text-foreground hover:text-primary transition-colors"
                 >
                   {item.label}
-                </motion.a>
+                </motion.button>
               ))}
             </div>
           </motion.div>

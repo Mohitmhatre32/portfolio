@@ -1,45 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { projects } from "@/lib/data";
 import { motion, AnimatePresence } from "framer-motion";
 
-const filters = ["All", "Frontend", "Backend", "Full Stack", "AI/ML", "Blockchain"];
-
 const ProjectsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeFilter, setActiveFilter] = useState("All");
-
-  useEffect(() => {
-    const loadGsap = async () => {
-      const gsap = (await import("gsap")).default;
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-
-      const ctx = gsap.context(() => {
-        gsap.from(".project-card", {
-          y: 80,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 70%",
-          },
-        });
-      }, sectionRef);
-
-      return () => ctx.revert();
-    };
-    loadGsap();
-  }, []);
-
-  const filtered = activeFilter === "All"
-    ? projects
-    : projects.filter(p => p.tags.includes(activeFilter));
 
   return (
-    <section ref={sectionRef} id="projects" className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section ref={sectionRef} id="projects" className="relative py-20 px-6">
+      <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold mb-4">
           <span className="gradient-text">Projects</span>
         </h2>
@@ -47,34 +15,18 @@ const ProjectsSection = () => {
           Award-winning projects built for hackathons and real-world impact.
         </p>
 
-        {/* Filter */}
-        <div className="flex flex-wrap gap-3 mb-12">
-          {filters.map(f => (
-            <button
-              key={f}
-              onClick={() => setActiveFilter(f)}
-              className={`magnetic-btn px-4 py-2 rounded-full text-sm font-mono transition-all duration-300 ${
-                activeFilter === f
-                  ? "bg-primary text-primary-foreground"
-                  : "glass-card text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-
         {/* Projects */}
-        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
-          <AnimatePresence mode="wait">
-            {filtered.map((project, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatePresence mode="popLayout">
+            {projects.map((project, i) => (
               <motion.div
                 key={project.title}
                 layout
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: i * 0.15 }}
                 className="project-card glass-card p-8 md:p-10 group hover:border-primary/20 transition-all duration-700"
                 style={{
                   ["--project-color" as string]: project.color,

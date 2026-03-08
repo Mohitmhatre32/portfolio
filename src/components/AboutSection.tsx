@@ -30,8 +30,8 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section ref={sectionRef} id="about" className="relative py-20 px-6">
+      <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold mb-4">
           <span className="gradient-text">About</span>
         </h2>
@@ -44,7 +44,7 @@ const AboutSection = () => {
           {/* Bio - spans 2 cols */}
           <div className="about-card glass-card p-8 lg:col-span-2 group hover:border-primary/20 transition-colors duration-500">
             <span className="text-xs font-mono text-primary/60 uppercase tracking-widest mb-4 block">Philosophy</span>
-            <p className="text-foreground/80 leading-relaxed text-base">
+            <p className="text-foreground/80 leading-relaxed text-base whitespace-pre-wrap">
               {profile.bio}
             </p>
           </div>

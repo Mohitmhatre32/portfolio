@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import CustomCursor from "@/components/CustomCursor";
 import Navigation from "@/components/Navigation";
+import HeroScene from "@/components/HeroScene";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -28,17 +29,18 @@ const Index = () => {
 
       return () => lenis.destroy();
     };
-    
+
     const cleanup = initLenis();
     return () => { cleanup.then(fn => fn?.()); };
   }, []);
 
   return (
     <div className="relative min-h-screen bg-background">
+      <HeroScene />
       <CustomCursor />
       <Navigation />
       <CommandPalette />
-      <main>
+      <main className="relative z-10">
         <HeroSection />
         <AboutSection />
         <SkillsSection />

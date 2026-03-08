@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { skills } from "@/lib/data";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -14,39 +14,13 @@ const categoryColors: Record<string, string> = {
 
 const SkillsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadGsap = async () => {
-      const gsap = (await import("gsap")).default;
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-
-      const ctx = gsap.context(() => {
-        gsap.from(".skill-category", {
-          y: 40,
-          opacity: 0,
-          duration: 0.6,
-          ease: "power3.out",
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 70%",
-          },
-        });
-      }, sectionRef);
-
-      return () => ctx.revert();
-    };
-    loadGsap();
-  }, []);
 
   const categories = Object.entries(skills);
 
   return (
-    <section ref={sectionRef} id="skills" className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section ref={sectionRef} id="skills" className="relative py-20 px-6">
+      <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold mb-4">
           <span className="gradient-text">Skills</span>
         </h2>
@@ -54,46 +28,19 @@ const SkillsSection = () => {
           Technologies I work with across the full stack.
         </p>
 
-        {/* Category filters */}
-        <div className="flex flex-wrap gap-3 mb-12">
-          <button
-            onClick={() => setActiveCategory(null)}
-            className={`magnetic-btn px-4 py-2 rounded-full text-sm font-mono transition-all duration-300 ${
-              !activeCategory
-                ? "bg-primary text-primary-foreground"
-                : "glass-card text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            All
-          </button>
-          {categories.map(([cat]) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat === activeCategory ? null : cat)}
-              className={`magnetic-btn px-4 py-2 rounded-full text-sm font-mono transition-all duration-300 ${
-                activeCategory === cat
-                  ? "bg-primary text-primary-foreground"
-                  : "glass-card text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
         {/* Skills grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="wait">
             {categories
-              .filter(([cat]) => !activeCategory || cat === activeCategory)
-              .map(([category, items]) => (
+              .map(([category, items], i) => (
                 <motion.div
                   key={category}
                   layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 0, scale: 0.95, y: 40 }}
+                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.1 }}
                   className="skill-category glass-card p-6 group hover:border-primary/20 transition-colors duration-500"
                 >
                   <div className="flex items-center gap-3 mb-5">
@@ -111,11 +58,10 @@ const SkillsSection = () => {
                         key={skill}
                         onMouseEnter={() => setHoveredSkill(skill)}
                         onMouseLeave={() => setHoveredSkill(null)}
-                        className={`px-3 py-1.5 rounded-md text-sm font-mono transition-all duration-300 ${
-                          hoveredSkill === skill
-                            ? "bg-primary/20 text-primary border border-primary/30"
-                            : "bg-secondary text-secondary-foreground border border-transparent"
-                        }`}
+                        className={`px-3 py-1.5 rounded-md text-sm font-mono transition-all duration-300 ${hoveredSkill === skill
+                          ? "bg-primary/20 text-primary border border-primary/30"
+                          : "bg-secondary text-secondary-foreground border border-transparent"
+                          }`}
                       >
                         {skill}
                       </span>

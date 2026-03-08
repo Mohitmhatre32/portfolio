@@ -2,18 +2,22 @@ export const profile = {
   name: "Mohit Mhatre",
   role: "Aspiring Software Engineer | Full-Stack Developer | AI & Blockchain Enthusiast",
   location: "Mumbai / Vasai Virar, Maharashtra, India",
-  email: "mohitmhatre107@gmail.com",
-  phone: "+91 8329870615",
-  linkedin: "https://www.linkedin.com/in/mohitmhatre",
+  email: "mohitmhatre32@gmail.com",
+  phone: "+91-9653248831",
+  linkedin: "https://www.linkedin.com/in/mohitmhatre32/",
   github: "https://github.com/Mohitmhatre32",
-  bio: `I am a passionate Software Engineering student with a strong foundation in building secure, distributed systems and intelligent applications. With a Diploma score of 94.06% and currently pursuing a B.Tech with Honors in Data Science, I bridge the gap between theoretical knowledge and real-world implementation.\n\nMy journey is defined by continuous learning through hackathons and open-source contributions. I specialize in the MERN stack, AI/ML forecasting models, and Blockchain applications. Whether it's developing NASA-award-winning analytics dashboards or decentralized gaming platforms, I aim to build scalable solutions that solve practical problems.`,
-};
+  leetcode: "", // Add leetcode URL here
+  bio: `I am a Second-Year B.Tech student with a deep-rooted passion for developing secure, distributed systems. With a background spanning from a 94% score in my Diploma to winning national-level hackathons, I approach software development as both a science and a craft.
 
+My core philosophy is: “Innovation with Intent.”
+
+I strive to build applications that don't just function, but flourish under scale. By combining a mastery of the MERN stack with emerging expertise in AI/ML and Blockchain, I aim to create digital solutions that are as resilient as they are intuitive. For me, success isn't just a finished project—it's the continuous evolution of my technical perspective and the real-world impact of the tools I build.`,
+};
 export const education = [
   {
     degree: "B.Tech Computer Science & Engineering",
     focus: "IoT, Cyber Security, Blockchain",
-    school: "Dwarkadas J. Sanghvi College of Engineering",
+    school: "Dwarkadas J. Sanghvi College of Engineering, Mumbai",
     university: "University of Mumbai",
     year: "Expected 2028",
     current: true,
@@ -77,14 +81,19 @@ export const experience = [
     company: "DJS ISACA Student Chapter",
     period: "Sept 2025 – Present",
     description: "Leading technical initiatives and organizing events for the student chapter.",
-    command: "cat djs_isaca.txt",
+    command: "djs_isaca",
   },
   {
     role: "Web Developer Intern",
     company: "Circuit Wala",
     period: "May 2024 – July 2024",
-    description: "Built responsive e-commerce website with admin panel using PHP, MySQL, HTML, CSS, Bootstrap.",
-    command: "cat circuitwala_internship.txt",
+    description: `Circuit Wala is a hardware and refurbishing firm that provides comprehensive technological solutions.
+
+• Developed and deployed a full-stack e-commerce platform with a custom admin panel using PHP and MySQL.
+• Designed responsive UI/UX mockups in Figma and translated them into code using HTML/CSS and Bootstrap.
+• Integrated secure payment gateways and user authentication systems.
+• Built robust product and order management modules to streamline business operations.`,
+    command: "circuitwala_internship",
   },
 ];
 
