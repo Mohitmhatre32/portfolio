@@ -2,11 +2,11 @@ export const profile = {
   name: "Mohit Mhatre",
   role: "Aspiring Software Engineer | Full-Stack Developer | AI & Blockchain Enthusiast",
   location: "Mumbai / Vasai Virar, Maharashtra, India",
-  email: "mohitmhatre32@gmail.com",
-  phone: "+91-9653248831",
+  email: "mohitmhatre107@gmail.com",
+  phone: "+91 8329870615",
   linkedin: "https://www.linkedin.com/in/mohitmhatre32/",
   github: "https://github.com/Mohitmhatre32",
-  leetcode: "", // Add leetcode URL here
+  leetcode: "https://leetcode.com/u/Mohitmhatre32/", // Add leetcode URL here
   bio: `I am a Second-Year B.Tech student with a deep-rooted passion for developing secure, distributed systems. With a background spanning from a 94% score in my Diploma to winning national-level hackathons, I approach software development as both a science and a craft.
 
 My core philosophy is: “Innovation with Intent.”
